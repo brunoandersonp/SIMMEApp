@@ -47,9 +47,9 @@ import java.util.TimerTask;
  */
 public class GraficosFragment extends Fragment{
 
-    TextView textGrafico;
+//    TextView textGrafico;
 
-//    private LineChart grafico;
+    private LineChart grafico;
 
 
     private String idBanco, idEquipamento;
@@ -86,17 +86,17 @@ public class GraficosFragment extends Fragment{
             idEquipamento = getArguments().getString(equipamento);
         }
 
-        textGrafico = view.findViewById(R.id.textGrafico);
+//        textGrafico = view.findViewById(R.id.textGrafico);
 
-//        grafico = view.findViewById(R.id.lineChart);
+        grafico = view.findViewById(R.id.lineChart);
 
         Log.d("list graficos", PontosListAdapter.pontosSelecionados.toString());
 
 //        grafico.setOnChartGestureListener(GraficosFragment.this);
 //        grafico.setOnChartValueSelectedListener(GraficosFragment.this);
 
-//        grafico.setDragEnabled(true);
-//        grafico.setScaleEnabled(true);
+        grafico.setDragEnabled(true);
+        grafico.setScaleEnabled(true);
 //
 //        LimitLine upper_limit = ;
 //
@@ -152,7 +152,7 @@ public class GraficosFragment extends Fragment{
                 });
             }
         };
-        timer.schedule(doAsynchronousTask, 0, 1000); //execute in every 50000 ms
+        timer.schedule(doAsynchronousTask, 0, 4000); //execute in every 50000 ms
     }
 
 
@@ -189,15 +189,15 @@ public class GraficosFragment extends Fragment{
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
-            Log.d("pontos escolhidos", pontosEscolhidos.toString());
-
-            textGrafico.setText("");
-
-            String teste = "";
-            for(int i = 0; i < pontosEscolhidos.size(); i++){
-                teste += pontosEscolhidos.get(i) + "\n";
-                textGrafico.setText(teste);
-            }
+//            Log.d("pontos escolhidos", pontosEscolhidos.toString());
+//
+//            textGrafico.setText("");
+//
+//            String teste = "";
+//            for(int i = 0; i < pontosEscolhidos.size(); i++){
+//                teste += pontosEscolhidos.get(i) + "\n";
+//                textGrafico.setText(teste);
+//            }
         }
     }
 
