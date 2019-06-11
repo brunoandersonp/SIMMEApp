@@ -7,17 +7,17 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-    <com.github.mikephil.charting.charts.LineChart
-        android:id="@+id/lineChart"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    </com.github.mikephil.charting.charts.LineChart>
-
-    <!--<TextView-->
-        <!--android:id="@+id/textGrafico"-->
+    <!--<com.github.mikephil.charting.charts.LineChart-->
+        <!--android:id="@+id/lineChart"-->
         <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:text="@string/hello_blank_fragment" />-->
+        <!--android:layout_height="match_parent">-->
+
+    <!--</com.github.mikephil.charting.charts.LineChart>-->
+
+    <TextView
+        android:id="@+id/textGrafico"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/hello_blank_fragment" />
 
 </FrameLayout>
