@@ -1,6 +1,7 @@
 package com.example.finalsimme.Fragment;
 
 
+import android.app.Activity;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -16,12 +17,16 @@ import com.example.finalsimme.ChartActivity;
 import com.example.finalsimme.GetData;
 import com.example.finalsimme.Model.Pontos;
 import com.example.finalsimme.R;
+import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.listener.OnChartGestureListener;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
@@ -36,7 +41,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class GraficosFragment extends Fragment implements OnChartGestureListener, OnChartValueSelectedListener{
+public class GraficosFragment extends Fragment{
 
     //TextView textGrafico;
 
@@ -83,8 +88,32 @@ public class GraficosFragment extends Fragment implements OnChartGestureListener
 
         Log.d("list graficos", PontosListAdapter.pontosSelecionados.toString());
 
+//        grafico.setOnChartGestureListener(GraficosFragment.this);
+//        grafico.setOnChartValueSelectedListener(GraficosFragment.this);
 
+        grafico.setDragEnabled(true);
+        grafico.setScaleEnabled(true);
 
+        ArrayList<Entry> yValues = new ArrayList<>();
+
+        yValues.add(new Entry(0, 60f));
+        yValues.add(new Entry(1, 50f));
+        yValues.add(new Entry(2, 40f));
+        yValues.add(new Entry(3, 50f));
+        yValues.add(new Entry(4, 35f));
+        yValues.add(new Entry(5, 40f));
+        yValues.add(new Entry(0, 60f));
+
+        LineDataSet set1 = new LineDataSet(yValues, "Data Set 1");
+
+        set1.setFillAlpha(110);
+
+        ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+        dataSets.add(set1);
+
+        LineData data = new LineData(dataSets);
+
+        grafico.setData(data);
 
 //        GerarGraficos gerarGraficos = new GerarGraficos();
 //        gerarGraficos.execute();
