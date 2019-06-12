@@ -47,9 +47,10 @@ import java.util.TimerTask;
  */
 public class GraficosFragment extends Fragment{
 
-//    TextView textGrafico;
-
     private LineChart grafico;
+    private int flag;
+    private long startTime;
+    private ArrayList<Entry> entriesData = new ArrayList<>();
 
 
     private String idBanco, idEquipamento;
@@ -92,41 +93,9 @@ public class GraficosFragment extends Fragment{
 
         Log.d("list graficos", PontosListAdapter.pontosSelecionados.toString());
 
-//        grafico.setOnChartGestureListener(GraficosFragment.this);
-//        grafico.setOnChartValueSelectedListener(GraficosFragment.this);
 
         grafico.setDragEnabled(true);
         grafico.setScaleEnabled(true);
-//
-//        LimitLine upper_limit = ;
-//
-//        ArrayList<Entry> yValues = new ArrayList<>();
-//
-//        yValues.add(new Entry(0, 60f));
-//        yValues.add(new Entry(1, 50f));
-//        yValues.add(new Entry(2, 40f));
-//        yValues.add(new Entry(3, 50f));
-//        yValues.add(new Entry(4, 35f));
-//        yValues.add(new Entry(5, 40f));
-//        yValues.add(new Entry(0, 60f));
-//
-//        LineDataSet set1 = new LineDataSet(yValues, "Data Set 1");
-//
-//        set1.setFillAlpha(110);
-//
-//        set1.setColor(Color.RED);
-//        set1.setLineWidth(3f);
-//        set1.setValueTextSize(10f);
-//
-//        ArrayList<ILineDataSet> dataSets = new ArrayList<>();
-//        dataSets.add(set1);
-//
-//        LineData data = new LineData(dataSets);
-//
-//        grafico.setData(data);
-
-//        GerarGraficos gerarGraficos = new GerarGraficos();
-//        gerarGraficos.execute();
 
         callAsynchronousTask();
 
@@ -142,8 +111,11 @@ public class GraficosFragment extends Fragment{
                 handler.post(new Runnable() {
                     public void run() {
                         try {
+                            if(flag == 0){
+                                startTime = System.currentTimeMillis();
+                                flag = 1;
+                            }
                             GerarGraficos gerarGraficos = new GerarGraficos();
-                            // PerformBackgroundTask this class is the class that extends AsynchTask
                             gerarGraficos.execute();
                         } catch (Exception e) {
                             // TODO Auto-generated catch block
@@ -159,6 +131,7 @@ public class GraficosFragment extends Fragment{
     public class GerarGraficos extends AsyncTask<Void, Void, Void>{
 
         List<String> pontosEscolhidos = new ArrayList<>();
+        long timeElapsed;
 
         @Override
         protected Void doInBackground(Void... voids) {
@@ -182,6 +155,9 @@ public class GraficosFragment extends Fragment{
                 }
             }
 
+            timeElapsed = (System.currentTimeMillis() - startTime)/1000;
+            entriesData.add(new Entry((float) timeElapsed, Float.valueOf(pontosEscolhidos.get(0))));
+
             return null;
         }
 
@@ -189,15 +165,21 @@ public class GraficosFragment extends Fragment{
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
-//            Log.d("pontos escolhidos", pontosEscolhidos.toString());
-//
-//            textGrafico.setText("");
-//
-//            String teste = "";
-//            for(int i = 0; i < pontosEscolhidos.size(); i++){
-//                teste += pontosEscolhidos.get(i) + "\n";
-//                textGrafico.setText(teste);
-//            }
+            LineDataSet dataset1 = new LineDataSet(entriesData, "DataSet Teste");
+
+            dataset1.setColor(Color.BLUE);
+
+            dataset1.setDrawCircles(true);
+
+            ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+            dataSets.add(dataset1);
+
+            LineData data = new LineData(dataSets);
+            grafico.setData(data);
+            grafico.notifyDataSetChanged();
+            grafico.setVisibleXRangeMaximum(10);
+            grafico.moveViewToX(data.getEntryCount());
+            grafico.invalidate();
         }
     }
 

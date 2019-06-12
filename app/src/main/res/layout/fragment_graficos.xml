@@ -7,12 +7,29 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-    <com.github.mikephil.charting.charts.LineChart
-        android:id="@+id/lineChart"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    </com.github.mikephil.charting.charts.LineChart>
+        <TextView
+            android:text="V. Rel. do Mancal do Guia do Gerador - Montante (Vibração Relativa)"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"/>
+
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/lineChart"
+            android:layout_width="350dp"
+            android:layout_height="300dp"
+            android:layout_gravity="center">
+        </com.github.mikephil.charting.charts.LineChart>
+
+    </LinearLayout>
+
+
 
     <!--<TextView-->
         <!--android:id="@+id/textGrafico"-->
