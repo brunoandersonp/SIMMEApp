@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.finalsimme.Adapter.PontosListAdapter;
 import com.example.finalsimme.ChartActivity;
@@ -47,10 +48,13 @@ import java.util.TimerTask;
  */
 public class GraficosFragment extends Fragment{
 
+    private TextView descrPonto;
     private LineChart grafico;
     private int flag;
     private long startTime;
     private ArrayList<Entry> entriesData = new ArrayList<>();
+    Timer timer = new Timer();
+    ArrayList<Pontos> pontosEscolhidos = new ArrayList<>();
 
 
     private String idBanco, idEquipamento;
@@ -90,6 +94,7 @@ public class GraficosFragment extends Fragment{
 //        textGrafico = view.findViewById(R.id.textGrafico);
 
         grafico = view.findViewById(R.id.lineChart);
+        descrPonto = view.findViewById(R.id.descrPonto);
 
         Log.d("list graficos", PontosListAdapter.pontosSelecionados.toString());
 
@@ -102,9 +107,17 @@ public class GraficosFragment extends Fragment{
         return view;
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        timer.cancel();
+        timer.purge();
+        timer = null;
+    }
+
     public void callAsynchronousTask() {
         final Handler handler = new Handler();
-        Timer timer = new Timer();
+        //Timer timer = new Timer();
         TimerTask doAsynchronousTask = new TimerTask() {
             @Override
             public void run() {
@@ -119,6 +132,7 @@ public class GraficosFragment extends Fragment{
                             gerarGraficos.execute();
                         } catch (Exception e) {
                             // TODO Auto-generated catch block
+                            Toast.makeText(getContext(), "Houve um problema ao se comunicar com o banco", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -130,7 +144,7 @@ public class GraficosFragment extends Fragment{
 
     public class GerarGraficos extends AsyncTask<Void, Void, Void>{
 
-        List<String> pontosEscolhidos = new ArrayList<>();
+
         long timeElapsed;
 
         @Override
@@ -142,12 +156,26 @@ public class GraficosFragment extends Fragment{
             if(pontos != null){
                 try{
                     pontosEscolhidos.clear();
+
                     JSONArray JA = new JSONArray(pontos);
                     for(int i = 0; i < JA.length(); i++){
                         JSONObject JO = (JSONObject) JA.get(i);
                         if(PontosListAdapter.pontosSelecionados.contains(String.valueOf(JO.getInt("cPontoID")))){
-                               pontosEscolhidos.add(JO.getString("valorglobal"));
+
+                            Pontos pontoEscolhido = new Pontos();
+
+                            pontoEscolhido.valorglobal = JO.getString("valorglobal");
+                            pontoEscolhido.descr = JO.getString("Descr");
+                            pontoEscolhido.unidade = JO.getString("unidade");
+
+                            pontosEscolhidos.add(pontoEscolhido);
+
                         }
+                    }
+
+                    if(!pontosEscolhidos.isEmpty()){
+                        timeElapsed = (System.currentTimeMillis() - startTime)/1000;
+                        entriesData.add(new Entry((float) timeElapsed, Float.valueOf(pontosEscolhidos.get(0).getValorglobal())));
                     }
 
                 } catch (JSONException e) {
@@ -155,8 +183,6 @@ public class GraficosFragment extends Fragment{
                 }
             }
 
-            timeElapsed = (System.currentTimeMillis() - startTime)/1000;
-            entriesData.add(new Entry((float) timeElapsed, Float.valueOf(pontosEscolhidos.get(0))));
 
             return null;
         }
@@ -166,6 +192,10 @@ public class GraficosFragment extends Fragment{
             super.onPostExecute(aVoid);
 
             LineDataSet dataset1 = new LineDataSet(entriesData, "DataSet Teste");
+
+            if(!pontosEscolhidos.isEmpty()){
+                descrPonto.setText(pontosEscolhidos.get(0).getDescr() + " (" + pontosEscolhidos.get(0).getUnidade() + ")");
+            }
 
             dataset1.setColor(Color.BLUE);
 
