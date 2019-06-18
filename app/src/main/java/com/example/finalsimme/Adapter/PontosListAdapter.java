@@ -38,10 +38,8 @@ public class PontosListAdapter extends ArrayAdapter<Pontos> {
 
         if(convertView == null)
         {
-            //convertView = LayoutInflater.from(context).inflate(R.layout.list_equipamento, parent, false);
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_pontos, null);
             viewHolder = new ViewHolder();
-            //viewHolder.nomePonto = convertView.findViewById(R.id.itemTextPonto);
             viewHolder.pontoCheckBox = convertView.findViewById(R.id.pontoCheckbox);
 
             pontosSelecionados.clear();

@@ -8,28 +8,14 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+    <!--<ListView-->
+        <!--android:id="@+id/listaGraficos"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"/>-->
 
-            <TextView
-                android:id="@+id/descrPonto"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:layout_marginRight="4dp"
-                android:layout_marginLeft="4dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"/>
-
-            <com.github.mikephil.charting.charts.LineChart
-                android:id="@+id/lineChart"
-                android:layout_width="350dp"
-                android:layout_height="300dp"
-                android:layout_gravity="center">
-            </com.github.mikephil.charting.charts.LineChart>
-
-        </LinearLayout>
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/grafico"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"/>
 
 </FrameLayout>
