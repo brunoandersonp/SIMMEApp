@@ -26,6 +26,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import static android.support.constraint.Constraints.TAG;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -113,6 +115,7 @@ public class CheckFragment extends Fragment {
 
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    Log.d(TAG, "NAO FOI POSSIVEL");
                 }
             }
 
@@ -134,8 +137,19 @@ public class CheckFragment extends Fragment {
                 public void onClick(View v) {
                     if(!PontosListAdapter.pontosSelecionados.isEmpty()){
 
+//                        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+//                        Fragment graficosFragment = GraficosFragment.newInstance(idBanco, idEquipamento);
+//
+//                        Log.d(TAG, PontosListAdapter.pontosSelecionados.toString());
+//
+//                        transaction.addToBackStack(null);
+//                        transaction.replace(R.id.frameLayoutChart, graficosFragment);
+//                        transaction.commit();
+
                         FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                        Fragment graficosFragment = GraficosFragment.newInstance(idBanco, idEquipamento);
+                        Fragment graficosFragment = UnicoGraficoFragment.newInstance(idBanco, idEquipamento);
+
+                        Log.d(TAG, PontosListAdapter.pontosSelecionados.toString());
 
                         transaction.addToBackStack(null);
                         transaction.replace(R.id.frameLayoutChart, graficosFragment);

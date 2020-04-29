@@ -77,6 +77,7 @@ public class PontoFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_ponto, container, false);
 
         floatingActionButton = view.findViewById(R.id.floatingActionButton);
+        floatingActionButton.setSize(FloatingActionButton.SIZE_MINI);
 
         swipeRefreshLayout = view.findViewById(R.id.swipeRefresh);
         swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimaryDark);

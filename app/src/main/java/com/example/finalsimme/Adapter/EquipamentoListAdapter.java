@@ -25,7 +25,7 @@ import java.util.ArrayList;
 public class EquipamentoListAdapter extends BaseAdapter {
 
     Context context;
-    ArrayList<Equipamento> equipamento = new ArrayList<>();
+    ArrayList<Equipamento> equipamento;
     String idBanco;
 
     private static final String TAG ="Log PDE";
